@@ -69,7 +69,6 @@
     <button class="add-btn">Add</button>
 
     <script>
-        // Gunakan localStorage sebagai pengganti cookie
         function saveDataToLocalStorage(data) {
             localStorage.setItem("kawanData", JSON.stringify(data));
         }
@@ -79,9 +78,25 @@
             return data ? JSON.parse(data) : [];
         }
 
+        function initializeDefaultData() {
+            let existingData = getDataFromLocalStorage();
+            if (existingData.length === 0) {
+                let defaultData = [
+                    { nim: "242505013", nama: "Muhamad Iqbal", kelas: "SI-2", prodi: "Sistem Informasi", alamat: "Solo" },
+                    { nim: "242505014", nama: "Muhammad Ajam", kelas: "SI-2", prodi: "Sistem Informasi", alamat: "Jakarta" },
+                    { nim: "242505016", nama: "Reza Maulana", kelas: "SI-2", prodi: "Sistem Informasi", alamat: "Yogyakarta" },
+                    { nim: "242505017", nama: "Muhamad Adam", kelas: "SI-2", prodi: "Sistem Informasi", alamat: "Surabaya" },
+                    { nim: "242505019", nama: "Muhamad Yusuf", kelas: "SI-2", prodi: "Sistem Informasi", alamat: "Semarang" }
+                ];
+                saveDataToLocalStorage(defaultData);
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             const tableBody = document.getElementById("kawanTable").querySelector("tbody");
             const addBtn = document.querySelector(".add-btn");
+
+            initializeDefaultData();
 
             function updateTable() {
                 tableBody.innerHTML = "";
